@@ -20,7 +20,6 @@ char *test_short_case()
   ticket_3->source = "DCA";
   ticket_3->destination = "NONE";
   tickets[2] = ticket_3;
-  printf("test\n\n\n");
 
   char *expected[] = { "PDX", "DCA", "NONE" };
 
