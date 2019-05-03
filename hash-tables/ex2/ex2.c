@@ -60,10 +60,10 @@ int main(void)
   tickets[2] = ticket_3;
 
   /* fixing memory leak */
+  /* print_route(reconstruct_trip(tickets, 3), 3); // PDX, DCA, NONE */
   char **route = reconstruct_trip(tickets, 3);
   print_route(route, 3);
   free(route);
-  /* print_route(reconstruct_trip(tickets, 3), 3); // PDX, DCA, NONE */
   for (int i = 0; i < 3; i++) {
     free(tickets[i]);
   }
