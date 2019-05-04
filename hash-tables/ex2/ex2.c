@@ -9,8 +9,23 @@ char **reconstruct_trip(Ticket **tickets, int length)
   HashTable *ht = create_hash_table(16);
   char **route = malloc(length * sizeof(char *));
 
-  // YOUR CODE HERE
+  // loop through tickets and create hash table
+  for (int i = 0; i < length; i++) {
+    hash_table_insert(ht, tickets[i]->source, tickets[i]->destination);
+  }
 
+  // set the current ticket by looking for the ht entry with NONE key
+  char *current = hash_table_retrieve(ht, "NONE");
+  /* while (hash_table_retrieve(ht, current) != "NONE") { */
+  for (int i = 0; i < length; i++) {
+    // while the current ticket has a destination, append value to list
+    /* if (strcmp(hash_table_retrieve(ht, current), "NONE") == 0) { */
+    /*   break; */
+    /* } */
+    *(route + i) = current;
+    current = hash_table_retrieve(ht, current);
+  }
+  destroy_hash_table(ht);
   return route;
 }
 
@@ -44,7 +59,15 @@ int main(void)
   ticket_3->destination = "NONE";
   tickets[2] = ticket_3;
 
-  print_route(reconstruct_trip(tickets, 3), 3); // PDX, DCA, NONE
+  /* fixing memory leak */
+  /* print_route(reconstruct_trip(tickets, 3), 3); // PDX, DCA, NONE */
+  char **route = reconstruct_trip(tickets, 3);
+  print_route(route, 3);
+  free(route);
+  for (int i = 0; i < 3; i++) {
+    free(tickets[i]);
+  }
+  free(tickets);
 
   return 0;
 }
